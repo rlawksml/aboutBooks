@@ -1,14 +1,11 @@
 <template>
     <div class="header">
-        <div class="logo">
-            <!-- <img src="/path/to/logo.png" alt="Logo"> -->
-        </div>
-        <nav class="navigation">
+
+        <h2 class="text-gray-600 text-[60px]">About Books</h2>
+        <nav class=" navigation">
             <ul>
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">Search</a></li>
             </ul>
         </nav>
     </div>
@@ -22,20 +19,26 @@
 <style lang="scss" scoped>
 .header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 10px 20px;
     background-color: #f8f9fa;
+    border-bottom: 1px solid #dcdcdc;
+    margin-bottom: 30px;
 }
 
-.logo img {
-    height: 40px;
+.navigation{
+    width: 100%;
+    display: flex;
+    justify-content: end;
 }
 
 .navigation ul {
-    list-style: none;
     display: flex;
-    gap: 20px;
+    li{
+        margin: 0 10px;
+    }
 }
 
 .navigation a {

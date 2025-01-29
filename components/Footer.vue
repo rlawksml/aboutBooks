@@ -16,8 +16,7 @@
             </div>
             <div class="footer-section contact">
                 <h2>Contact Us</h2>
-                <p>Email: info@aboutbooks.com</p>
-                <p>Phone: +123 456 7890</p>
+                <a href="https://github.com/rlawksml">https://github.com/rlawksml</a>
             </div>
         </div>
     </div>
