@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        여기?
+        메인페이지 입니다.
     </div>
 </template>
 
@@ -11,5 +11,7 @@
 
 
 <style lang="scss" scoped>
+
+    
 
 </style>

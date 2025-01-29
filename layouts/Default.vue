@@ -4,7 +4,9 @@
 
 <template>
     <div>
-        여긴 그냥 디폴트 뷰인데 이건 또 뭐임?
+        <Header/>
+        <slot/>
+        <Footer/>
     </div>
 </template>
 
