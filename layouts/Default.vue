@@ -1,10 +1,21 @@
 <script setup lang="ts">
+import { useAppConfig, useHead } from '#imports'
+const config = useAppConfig()
+
+useHead({
+  title: config.title,
+  meta: [
+    { name: 'description', content: config.description }
+  ]
+})
 
 </script>
 
 <template>
     <div>
-        여긴 그냥 디폴트 뷰인데 이건 또 뭐임?
+        <Header/>
+        <slot/>
+        <Footer/>
     </div>
 </template>
 
