@@ -1,11 +1,18 @@
 <template>
     <div class="header">
-
-        <h2 class="text-gray-600 text-[60px]">About Books</h2>
+        <h2 class="text-lime-600 text-[60px]">About Books</h2>
         <nav class=" navigation">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">Search</a></li>
+                <li>
+                    <nuxt-link to="/">
+                        Home
+                    </nuxt-link>
+                    </li>
+                <li>
+                     <nuxt-link to="/search">
+                        Search
+                    </nuxt-link>
+                </li>
             </ul>
         </nav>
     </div>
