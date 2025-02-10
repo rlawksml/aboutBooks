@@ -1,3 +1,12 @@
+
+<template>
+    <div>
+        <Header/>
+        <slot/>
+        <Footer/>
+    </div>
+</template>
+
 <script setup lang="ts">
 import { useAppConfig, useHead } from '#imports'
 const config = useAppConfig()
@@ -11,13 +20,6 @@ useHead({
 
 </script>
 
-<template>
-    <div>
-        <Header/>
-        <slot/>
-        <Footer/>
-    </div>
-</template>
 
 <style lang="scss" scoped>
 

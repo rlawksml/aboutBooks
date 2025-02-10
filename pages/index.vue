@@ -1,6 +1,5 @@
 
 <template>
-  
     <div>
         <content-section>
             <intro-books></intro-books>
