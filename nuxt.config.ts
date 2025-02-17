@@ -18,5 +18,7 @@ export default defineNuxtConfig({
       autoprefixer: {}, // 자동 접두사 추가
     },
   },
-
+  modules: [
+    '@pinia/nuxt',
+  ],
 })
