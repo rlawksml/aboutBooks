@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   },
   css:[
     '@/assets/css/reset.css',
-    "@/assets/css/tailwind.css"
+    "@/assets/css/tailwind.css",
   ],
   build: {
     transpile: ["sass"],
@@ -18,4 +18,7 @@ export default defineNuxtConfig({
       autoprefixer: {}, // 자동 접두사 추가
     },
   },
+  modules: [
+    '@pinia/nuxt',
+  ],
 })

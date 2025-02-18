@@ -1,7 +1,7 @@
 <template>
     <div>
         <content-section>
-            <p>여기는 어바웃 서치페이지.</p>
+            <p>여기는 서치페이지.</p>
         </content-section>
     </div>
 </template>

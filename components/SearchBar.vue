@@ -1,7 +1,8 @@
 <template>
-    <div>
-        <input type="text" placeholder="검색어를 입력하세요">
-        <button>검색</button>
+    <div class="flex justify-center my-10">
+        <input class="" type="text" placeholder="검색어를 입력하세요">
+        <button class="">검색</button>
+
     </div>
 </template>
 
