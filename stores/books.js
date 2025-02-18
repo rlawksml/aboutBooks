@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { ofetch } from 'ofetch';
 
 const useBooksStore = defineStore('booksStore', {
   state() {
@@ -17,6 +18,31 @@ const useBooksStore = defineStore('booksStore', {
         } else {
           console.log('Data not fetched', response.status);
         }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async searchBook(keyword) {
+      const config = useRuntimeConfig();
+      console.log('searching book', keyword);
+      try {
+        const response = await ofetch(
+          'https://dapi.kakao.com/v3/search/book?target=title?target=authors',
+          {
+            method: 'GET',
+            params: {
+              query: keyword,
+              page: 40,
+              size: 25,
+              target: 'title',
+            },
+            headers: {
+              Authorization: `KakaoAK ${config.public.kakaoAPI}`,
+            },
+          },
+        );
+
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
