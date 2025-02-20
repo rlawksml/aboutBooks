@@ -7,14 +7,18 @@
 
 <script setup >
     import {ref} from 'vue'
+    import useYoutbueSearch from '~/stores/youtubeSearch'
     import useBooksStore from "../stores/books"
 
     let searchData = ref('')
 
     const booksStore = useBooksStore()
+    const youtubeStore = useYoutbueSearch()
+    
     
     const searchClick = () => {        
         booksStore.searchBook(searchData.value)
+        youtubeStore.fetchYoutube(searchData.value)
     }
     
 </script>
