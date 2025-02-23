@@ -2,10 +2,9 @@
 <template>
     <div>
         <content-section>
-            <intro-books></intro-books>
             <search-bar></search-bar>
+            <intro-books></intro-books>
         </content-section>
-
 <p></p>
 
 
@@ -23,8 +22,8 @@ const booksStore = useBooksStore();
 const youtubeSearch = useYoutbueSearch();
 
 onMounted(async() => {
-    await booksStore.fetchBooks();
-    console.log('📚 도서 목록:', booksStore.getBooks);
+    // await booksStore.fetchBooks();
+    // console.log('📚 도서 목록:', booksStore.getBooks);
 });
 
 </script>

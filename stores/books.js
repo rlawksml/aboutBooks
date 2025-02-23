@@ -12,11 +12,12 @@ const useBooksStore = defineStore('booksStore', {
       try {
         const response = await fetch('https://jsonplaceholder.typicode.com/posts');
         const data = await response.json();
-        this.books = data;
+
         if (response.status === 200) {
-          console.log('Data fetched successfully', this.books);
+          console.log('🟢 Data fetched successfully', this.books);
+          this.books = data;
         } else {
-          console.log('Data not fetched', response.status);
+          console.log('😥 Data not fetched', response.status);
         }
       } catch (error) {
         console.log(error);
