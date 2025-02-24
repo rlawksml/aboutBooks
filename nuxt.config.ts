@@ -14,9 +14,11 @@ export default defineNuxtConfig({
   css:[
     '@/assets/css/reset.css',
     "@/assets/css/tailwind.css",
+    'quasar/dist/quasar.css',
+    '@quasar/extras/material-icons/material-icons.css',
   ],
   build: {
-    transpile: ["sass"],
+    transpile: [],
   }, 
   postcss: {
     plugins: {
@@ -27,4 +29,10 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
   ],
+  vite: {
+    optimizeDeps: {
+      include: ['quasar', '@quasar/extras/material-icons'],
+    },
+  },
+
 })

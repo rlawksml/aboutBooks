@@ -23,9 +23,9 @@ const useBooksStore = defineStore('booksStore', {
         console.log(error);
       }
     },
+
     async searchBook(keyword) {
       const config = useRuntimeConfig();
-      // console.log('searching book', keyword);
       try {
         const response = await ofetch(
           'https://dapi.kakao.com/v3/search/book?target=title?target=authors',
@@ -43,9 +43,9 @@ const useBooksStore = defineStore('booksStore', {
           },
         );
 
-        console.log(response);
+        this.books = response.documents;
       } catch (error) {
-        console.log(error);
+        console.warn(error);
       }
     },
   },

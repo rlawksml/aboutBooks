@@ -11,17 +11,32 @@
             <p class="mb-5 desc">{{reduceLetter(selectBook.desc)}}</p>
 
 
-            <default-buttons text="버튼">
+            <!-- <default-buttons text="버튼">
                     <a :href="selectBook.link" target="_blank">자세히 보기</a>
-            </default-buttons>
+                    {{ notifyUser() }}
+            </default-buttons> -->
  
         </div>
     </div>
+
+        <q-btn label="책 보러 가기" color="primary" @click="moveExternal(selectBook.link)" />
+
 </template>
 
 <script setup lang="ts">
 import bookImage1 from '~/assets/images/book1.jpg'
 import bookImage2 from '~/assets/images/book2.jpg'
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar();
+
+function notifyUser() {
+  $q.notify({
+    message: '✅ About Books',
+    color: 'green',
+    position: 'top',
+  });
+}
 
 const initBookList = [
     {
@@ -38,7 +53,6 @@ const initBookList = [
     }
 ]
 
-// const selectBook = ref(initBookList[0])
 
 const reduceLetter = (text : string) : string => {
     return text.length >= 200 ? text.slice(0,200).concat('...'): text
@@ -49,10 +63,10 @@ const selectBook = useState('selectBook', ()=>{
     return initBookList[randomNum]
 })
 
-// onMounted(()=>{
-//     const randomNum = Math.floor(Math.random() * initBookList.length)
-//     selectBook.value = initBookList[randomNum]
-// })
+const moveExternal = (link : string) => {
+    window.open(link)
+}
+
 
 </script>
 
