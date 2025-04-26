@@ -2,11 +2,10 @@
 <template>
     <div>
         <content-section>
-            <intro-books></intro-books>
             <search-bar></search-bar>
+            <intro-books></intro-books>
         </content-section>
-
-<p>         {{  }} ds</p>
+<p></p>
 
 
     </div>
@@ -15,14 +14,16 @@
 <script setup lang="ts">
 import ContentSection from '~/components/ContentSection.vue';
 import IntroBooks from '~/components/main/IntroBooks.vue';
-import SearchBar from '~/components/SearchBar.vue';
+import useYoutbueSearch from '~/stores/youtubeSearch';
+import SearchBar from '../components/SearchBar.vue';
 import useBooksStore from '../stores/books';
 
 const booksStore = useBooksStore();
+const youtubeSearch = useYoutbueSearch();
 
 onMounted(async() => {
-    await booksStore.fetchBooks();
-    console.log('📚 도서 목록:', booksStore.getBooks);
+    // await booksStore.fetchBooks();
+    // console.log('📚 도서 목록:', booksStore.getBooks);
 });
 
 </script>
