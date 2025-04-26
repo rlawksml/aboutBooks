@@ -11,7 +11,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(Quasar, {
       plugins: { Notify, Dialog }, // 사용하려는 Quasar 플러그인 명시
       config: {
-        notify: { position: 'top' }, // Notify 설정 (선택 사항)
+        notify: { position: 'top', timeout: 3000 }, // Notify 설정 (선택 사항)
       },
     });
   }
