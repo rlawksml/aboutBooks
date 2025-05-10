@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { ofetch } from 'ofetch';
 
 const useBooksStore = defineStore('booksStore', {
   state() {
@@ -27,10 +26,9 @@ const useBooksStore = defineStore('booksStore', {
     async searchBook(keyword) {
       const config = useRuntimeConfig();
       try {
-        const response = await ofetch(
+        const response = await $fetch(
           'https://dapi.kakao.com/v3/search/book?target=title?target=authors',
           {
-            method: 'GET',
             params: {
               query: keyword,
               page: 40,

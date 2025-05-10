@@ -2,16 +2,16 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   runtimeConfig: {
-    kakaoAPI: process.env.API_KEY,
+    kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
     public: {
-      kakaoAPI: process.env.API_KEY,
+      kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
     }
   },
   devtools: { enabled: true },
   app: {
-    baseURL: '/', 
+    baseURL: '/',
   },
-  css:[
+  css: [
     '@/assets/css/reset.css',
     "@/assets/css/tailwind.css",
     'quasar/dist/quasar.css',
@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   ],
   build: {
     transpile: [],
-  }, 
+  },
   postcss: {
     plugins: {
       tailwindcss: {},  // Tailwind CSS 활성화
