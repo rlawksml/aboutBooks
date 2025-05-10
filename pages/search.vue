@@ -26,6 +26,7 @@ import useBooksStore from '~/stores/books';
 import { storeToRefs } from 'pinia'
 
 const { books } = storeToRefs(useBooksStore())
+
 </script>
 
 <style lang="scss" scoped>
