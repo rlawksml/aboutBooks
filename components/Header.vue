@@ -1,6 +1,9 @@
 <template>
     <div class="header">
-        <h2 class="text-lime-600 text-[60px]">About Books</h2>
+        <nuxt-link to="/" class="text-3xl font-bold text-lime-600">
+            <h2 class="text-lime-600 text-[60px]">About Books</h2>
+        </nuxt-link>
+
         <nav class=" navigation">
             <ul>
                 <li>
@@ -9,7 +12,7 @@
                     </nuxt-link>
                 </li>
                 <li>
-                     <nuxt-link to="/search">
+                    <nuxt-link to="/search">
                         Search
                     </nuxt-link>
                 </li>
@@ -20,7 +23,7 @@
 
 
 <script setup lang="ts">
-    
+
 </script>
 
 <style lang="scss" scoped>
@@ -35,7 +38,7 @@
     margin-bottom: 30px;
 }
 
-.navigation{
+.navigation {
     width: 100%;
     display: flex;
     justify-content: end;
@@ -43,7 +46,8 @@
 
 .navigation ul {
     display: flex;
-    li{
+
+    li {
         margin: 0 10px;
     }
 }
@@ -58,6 +62,3 @@
     color: #007bff;
 }
 </style>
-
-
-
