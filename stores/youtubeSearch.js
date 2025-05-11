@@ -20,7 +20,6 @@ const useYoutbueSearch = defineStore('youtubeStore', {
           },
         });
 
-        console.log('Data fetched successfully', response);
         if (response.status === 200) {
           console.log('Data fetched successfully', response);
           this.youtubes = response;

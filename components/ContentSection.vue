@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center  h-[90vh] px-10">
+    <div class="flex flex-col items-center h-[90vh] max-h-[100vh] px-10">
         <slot />
     </div>
 </template>
@@ -8,6 +8,4 @@
 
 </script>
 
-<style lang="css" scoped>
-
-</style>
+<style lang="css" scoped></style>

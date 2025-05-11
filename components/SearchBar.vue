@@ -1,12 +1,10 @@
 <template>
-    <Form @submit="searchClick" v-slot="{ errors }">
-        <div class="flex justify-center my-2 mb-5 ml-auto">
-            <Field @keydown.enter="searchClick" name="search" rules="required" v-model="searchData" class="" type="text"
+    <Form class="" v-slot="{ validate }">
+        <div class="p-1 border-gray-100 rounded-lg shadow-md flex justify-center my-2 ml-auto">
+            <Field name="search" rules="required" v-model="searchData"
+                class="border mr-2 rounded-lg p-2 border-none outline-none focus:ring-2 focus:ring-blue-500" type="text"
                 placeholder="검색어를 입력하세요" />
-            <ErrorMessage name="search" v-slot="{ message }">
-                <span class="error-message">{{ message }}</span>
-            </ErrorMessage>
-            <button type="submit" class="">검색</button>
+            <button @click="(e) => handleSubmit(e, validate)" type="submit" class="mx-2 hover:font-bold">검색</button>
         </div>
     </Form>
 </template>
@@ -28,28 +26,37 @@ defineRule('required', required);
 
 let searchData = ref('')
 const router = useRouter()
-
 const booksStore = useBooksStore()
 const youtubeStore = useYoutubeSearch()
 
-const searchClick = async (e) => {
+const handleSubmit = async (e, validate) => {
     e.preventDefault()
+    const isValid = await validate()
 
-    console.log(searchData.value)
-    console.log(searchData.value.trim())
-
-    if (searchData.value.trim() === '') {
+    if (!isValid || searchData.value.trim() === '') {
         notifyUser('🔴 검색어를 입력해주세요')
         return
     }
 
+    searchClick(isValid)
+}
+
+const searchClick = async () => {
+    $q.loading.show({
+        message: '검색중입니다...',
+        spinnerColor: 'white',
+        spinnerSize: 50,
+    })
     await booksStore.searchBook(searchData.value)
     await youtubeStore.fetchYoutube(searchData.value)
+    $q.loading.hide()
     moveSearchPage()
 }
 
-const moveSearchPage = () => {
-    router.push('/search')
+const moveSearchPage = async () => {
+    if (router.currentRoute.value.path !== '/search') {
+        router.push('/search')
+    }
 }
 
 function notifyUser(message) {

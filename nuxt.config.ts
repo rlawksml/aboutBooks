@@ -7,6 +7,7 @@ export default defineNuxtConfig({
       kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
     }
   },
+  components: true,
   devtools: { enabled: true },
   app: {
     baseURL: '/',
