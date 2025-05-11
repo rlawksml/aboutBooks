@@ -40,7 +40,6 @@ const useBooksStore = defineStore('booksStore', {
             },
           },
         );
-
         this.books = response.documents;
       } catch (error) {
         console.warn(error);
