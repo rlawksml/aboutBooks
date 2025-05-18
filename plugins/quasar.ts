@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from '#app';
-import { Quasar, Notify, Dialog, Loading, QBtn } from 'quasar'; // ✅ QBtn 추가
+import { Quasar, Notify, Dialog, Loading, QBtn, QTooltip, QTab, QTabPanel, QTabs, QTabPanels } from 'quasar'; // ✅ QBtn 추가
 
 
 import 'quasar/dist/quasar.css';
@@ -8,6 +8,12 @@ import '@quasar/extras/material-icons/material-icons.css';
 export default defineNuxtPlugin((nuxtApp) => {
   if (process.client) {
     nuxtApp.vueApp.component('q-btn', QBtn); // ✅ q-btn 전역 등록
+    nuxtApp.vueApp.component('q-tooltip', QTooltip); // ✅ q-tooltip 전역 등록
+    nuxtApp.vueApp.component('q-tab', QTab); // ✅ q-tab 전역 등록
+    nuxtApp.vueApp.component('q-tab-panel', QTabPanel); // ✅ q-tab-panel 전역 등록
+    nuxtApp.vueApp.component('q-tabs', QTabs); // ✅ q-tabs 전역 등록
+    nuxtApp.vueApp.component('q-tab-panels', QTabPanels); // ✅ q-tab-panels 전역 등록
+    // Quasar 플러그인 사용 설정
     nuxtApp.vueApp.use(Quasar, {
       plugins: { Notify, Dialog, Loading }, // 사용하려는 Quasar 플러그인 명시
       config: {

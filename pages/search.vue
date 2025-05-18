@@ -1,36 +1,22 @@
 <template>
     <div>
-        <content-section class="!flex-nowrap">
+        <q-tabs v-model="tab" class="text-primary" dense active-color="primary" indicator-color="primary">
+            <q-tab name="books" label="도서" />
+            <q-tab name="youtube" label="유튜브" />
+            <q-tab name="blog" label="블로그" />
+        </q-tabs>
 
-            <div class="flex flex-col justify-center my-2 mb-5 ml-auto">
-                <search-bar class="flex" />
-                <div class="flex justify-center my-2 mb-5 ml-auto">
-                    <h2 class="text-sm font-light px-4 py-2">검색 결과</h2>
-                    <p class="text-gray-600 px-4 py-2">검색된 책 : {{ books.length || 0 }} 권</p>
-                    <!-- <button @click="$router.push('/')" class="bg-blue-500 text-blue px-4 py-2 rounded">홈으로</button> -->
-                </div>
-            </div>
-
-
-            <!-- <p class="text-gray-600 mb-4">검색어: {{ searchData }}</p> -->
-            <!-- <p class="text-gray-600 mb-4">검색된 유튜브 영상의 개수: {{ youtubeVideos.length }}</p> -->
-
-            <div v-if="books.length" class="books-grid">
-                <div v-for="book in books" :key="book.isbn" class="book-card">
-                    <img :src="book.thumbnail" alt="Book Thumbnail" class="book-thumbnail" />
-                    <div class="book-info">
-                        <h3 class="book-title">{{ book.title }}</h3>
-                        <p class="book-contents">{{ book.contents }}</p>
-                        <p class="book-publisher">출판사: {{ book.publisher }}</p>
-                        <p class="book-price">가격: {{ book.price }}원</p>
-                        <p class="book-datetime">출판일: {{ new Date(book.datetime).toLocaleDateString() }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="no-data" v-else>
-                <p>검색된 책이 없습니다.</p>
-            </div>
-        </content-section>
+        <q-tab-panels v-model="tab" animated>
+            <q-tab-panel name="books">
+                <search-template :dataInfo="dataInfo" class="search-bar-container" />
+            </q-tab-panel>
+            <q-tab-panel name="youtube">
+                <search-template :dataInfo="dataInfo" class="search-bar-container" />
+            </q-tab-panel>
+            <q-tab-panel name="blog">
+                <div>서비스 예정</div>
+            </q-tab-panel>
+        </q-tab-panels>
     </div>
 </template>
 
@@ -38,8 +24,21 @@
 import ContentSection from '~/components/ContentSection.vue';
 import useBooksStore from '~/stores/books';
 import { storeToRefs } from 'pinia'
+import lodash from 'lodash'
 
-const { books } = storeToRefs(useBooksStore())
+onMounted(() => {
+    const booksStore = useBooksStore()
+    dataInfo = (lodash.cloneDeep(booksStore.books))
+})
+
+onUnmounted(() => {
+    const booksStore = useBooksStore()
+    booksStore.searchBook('')
+    console.log('🧹 cleanup')
+})
+
+let dataInfo = ref([])
+const tab = ref('books')
 
 </script>
 
