@@ -10,13 +10,13 @@
 
         <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="books">
-                <search-template :dataInfo="dataInfo" class="search-bar-container" />
+                <search-template :dataInfo="dataInfo" type="book" class="search-bar-container" />
             </q-tab-panel>
             <q-tab-panel name="youtube">
-                <search-template :dataInfo="dataInfo2" class="search-bar-container" />
+                <search-template :dataInfo="dataInfo2" type="youbue" class="search-bar-container" />
             </q-tab-panel>
             <q-tab-panel name="blog">
-                <search-template :dataInfo="dataInfo3" class="search-bar-container" />
+                <search-template :dataInfo="dataInfo3" type="blog" class="search-bar-container" />
             </q-tab-panel>
         </q-tab-panels>
     </div>
