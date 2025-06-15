@@ -1,8 +1,8 @@
 <template>
     <div>
-               <content-section>
+        <content-section>
         이곳은 소개페이지 입니다.
-               </content-section>
+        </content-section>
     </div>
 </template>
 

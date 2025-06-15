@@ -1,5 +1,7 @@
 <template>
     <div>
+        <search-bar :searchType="false" class="flex" />
+        
         <q-tabs v-model="tab" class="text-primary" dense active-color="primary" indicator-color="primary">
             <q-tab name="books" label="도서" />
             <q-tab name="youtube" label="유튜브" />
@@ -11,34 +13,75 @@
                 <search-template :dataInfo="dataInfo" class="search-bar-container" />
             </q-tab-panel>
             <q-tab-panel name="youtube">
-                <search-template :dataInfo="dataInfo" class="search-bar-container" />
+                <search-template :dataInfo="dataInfo2" class="search-bar-container" />
             </q-tab-panel>
             <q-tab-panel name="blog">
-                <div>서비스 예정</div>
+                <search-template :dataInfo="dataInfo3" class="search-bar-container" />
             </q-tab-panel>
         </q-tab-panels>
     </div>
 </template>
 
 <script setup lang="ts">
-import ContentSection from '~/components/ContentSection.vue';
 import useBooksStore from '~/stores/books';
-import { storeToRefs } from 'pinia'
+import useYoutubeSearch from '~/stores/youtubeSearch';
+import useblogSearch from '~/stores/blogSearch';
 import lodash from 'lodash'
+import { useQuasar } from 'quasar'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
-onMounted(() => {
-    const booksStore = useBooksStore()
-    dataInfo = (lodash.cloneDeep(booksStore.books))
+let dataInfo = ref<any[]>([])
+let dataInfo2 = ref<any[]>([])
+let dataInfo3 = ref<any[]>([])
+const tab = ref('books')
+const $q = useQuasar();
+
+const booksStore = useBooksStore()
+const youtubeStore = useYoutubeSearch()
+const blogStore = useblogSearch()
+
+onMounted(async () => {
+    $q.loading.show({
+        message: 'Loading...',
+        spinnerColor: 'white',
+        spinnerSize: 50,
+    })
+    
+    dataInfo.value = lodash.cloneDeep(booksStore.books)
+    dataInfo2.value = lodash.cloneDeep(youtubeStore.youtubes)
+    dataInfo3.value = lodash.cloneDeep(blogStore.blogList)
+    $q.loading.hide()
 })
+
+// store 데이터가 바뀔 때마다 dataInfo도 자동 갱신
+watch(
+  () => booksStore.books,
+  (newVal) => {
+    dataInfo.value = lodash.cloneDeep(newVal)
+  }
+)
+watch(
+  () => youtubeStore.youtubes,
+  (newVal) => {
+    dataInfo2.value = lodash.cloneDeep(newVal)
+  }
+)
+watch(
+  () => blogStore.blogList,
+  (newVal) => {
+    dataInfo3.value = lodash.cloneDeep(newVal)
+  }
+)
 
 onUnmounted(() => {
-    const booksStore = useBooksStore()
-    booksStore.searchBook('')
+    dataInfo.value = []
+    dataInfo2.value = []
+    dataInfo3.value = []
+    booksStore.books = []
+    youtubeStore.youtubes = []
+    blogStore.blogList = []
     console.log('🧹 cleanup')
 })
-
-let dataInfo = ref([])
-const tab = ref('books')
 
 </script>
 

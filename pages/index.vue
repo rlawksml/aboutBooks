@@ -14,12 +14,12 @@
 <script setup lang="ts">
 import ContentSection from '~/components/ContentSection.vue';
 import IntroBooks from '~/components/main/IntroBooks.vue';
-import useYoutbueSearch from '~/stores/youtubeSearch';
+import useYoutubeSearch from '~/stores/youtubeSearch';
 import SearchBar from '../components/SearchBar.vue';
 import useBooksStore from '../stores/books';
 
 const booksStore = useBooksStore();
-const youtubeSearch = useYoutbueSearch();
+const youtubeSearch = useYoutubeSearch();
 
 onMounted(async() => {
     // await booksStore.fetchBooks();
