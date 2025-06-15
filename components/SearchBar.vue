@@ -22,8 +22,9 @@
 import { ref } from 'vue'
 import useYoutubeSearch from '~/stores/youtubeSearch'
 import useBooksStore from "../stores/books"
+import useBlogSearch from '~/stores/blogSearch'
 import { useRouter } from 'vue-router'
-import { Form, Field, ErrorMessage, defineRule } from 'vee-validate';
+import { Form, Field, defineRule } from 'vee-validate';
 import { required } from '@vee-validate/rules';
 
 import { useQuasar } from 'quasar'
@@ -44,6 +45,7 @@ let searchData = ref('')
 const router = useRouter()
 const booksStore = useBooksStore()
 const youtubeStore = useYoutubeSearch()
+const blogStore = useBlogSearch()
 
 const handleSubmit = async (e, validate) => {
     e.preventDefault()
@@ -65,8 +67,9 @@ const searchClick = async () => {
     })
     await booksStore.searchBook(searchData.value)
     await youtubeStore.fetchYoutube(searchData.value)
+    await blogStore.fetchBlog(searchData.value)
     $q.loading.hide()
-    moveSearchPage()
+    await moveSearchPage()
 }
 
 const moveSearchPage = async () => {

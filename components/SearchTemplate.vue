@@ -2,12 +2,12 @@
     <content-section class="!flex-nowrap">
 
         <div class="flex flex-col justify-center my-2 mb-5 ml-auto">
-            <search-bar :searchType="false" class="flex" />
-            <div class="flex justify-center my-2 mb-5 ml-auto">
+
+            <!-- <div class="flex justify-center my-2 mb-5 ml-auto">
                 <h2 class="text-sm font-light px-4 py-2">검색 결과</h2>
                 <p class="text-gray-600 px-4 py-2">검색 건수 : {{ dataInfo.length || 0 }} 권</p>
-                <!-- <button @click="$router.push('/')" class="bg-blue-500 text-blue px-4 py-2 rounded">홈으로</button> -->
-            </div>
+                <button @click="$router.push('/')" class="bg-blue-500 text-blue px-4 py-2 rounded">홈으로</button>
+            </div> -->
         </div>
 
         <div v-if="dataInfo.length" class="books-grid">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="no-data" v-else>
-            <p>검색된 책이 없습니다.</p>
+            <p>검색 결과가 없습니다.</p>
         </div>
     </content-section>
 </template>
@@ -32,12 +32,9 @@
 const { books } = storeToRefs(useBooksStore())
 import { storeToRefs } from 'pinia'
 import useBooksStore from "../stores/books"
-import SearchBar from './SearchBar.vue'
 import ContentSection from './ContentSection.vue'
-import { onUnmounted } from 'vue'
-import { ref } from 'vue'
 
-defineProps({
+const props = defineProps({
     dataInfo: {
         type: Array,
         default: (() => [])
@@ -45,8 +42,13 @@ defineProps({
 })
 
 onMounted(() => {
-    // console.log(dataInfo)
+    console.log(props.dataInfo)
 })
+
+watch(() => props.dataInfo, (newData) => {
+    console.log('Updated dataInfo:', newData)
+}, { immediate: true })
+
 </script>
 
 <style></style>
