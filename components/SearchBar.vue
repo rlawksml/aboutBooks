@@ -79,7 +79,6 @@ const moveSearchPage = async () => {
 }
 
 function notifyUser(message) {
-    console.log(message)
     $q.notify({
         message,
         color: 'red',

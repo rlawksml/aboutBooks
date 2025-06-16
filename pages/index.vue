@@ -5,10 +5,10 @@
             <search-bar></search-bar>
             <intro-books></intro-books>
         </content-section>
-<p></p>
-
-
+        
+        <Library/>
     </div>
+
 </template>
 
 <script setup lang="ts">
@@ -17,14 +17,10 @@ import IntroBooks from '~/components/main/IntroBooks.vue';
 import useYoutubeSearch from '~/stores/youtubeSearch';
 import SearchBar from '../components/SearchBar.vue';
 import useBooksStore from '../stores/books';
+import Library from '../components/map/library.vue';
 
 const booksStore = useBooksStore();
 const youtubeSearch = useYoutubeSearch();
-
-onMounted(async() => {
-    // await booksStore.fetchBooks();
-    // console.log('📚 도서 목록:', booksStore.getBooks);
-});
 
 </script>
 
