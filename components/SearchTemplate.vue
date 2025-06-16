@@ -62,7 +62,6 @@ const props = defineProps({
 })
 
 onMounted(() => {
-    console.log(props.dataInfo)
 })
 
 watch(() => props.dataInfo, (newData) => {
