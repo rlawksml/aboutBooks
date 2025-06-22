@@ -1,80 +1,101 @@
 <template>
   <div class="q-pa-md">
-    <q-dialog v-model="dialog" persistent>
-      <q-tabs v-model="tab" class="text-teal">
-        <q-tab name="mails" icon="mail" label="Mails" />
-        <q-tab name="alarms" icon="alarm" label="Alarms" />
+    <q-dialog  v-model="loginStore.isLoginModalOpen" persistent>
+      <div class="dialog">
+      <q-tabs v-model="tab" class="text-teal bg-white" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
+        <q-tab name="login" icon="mail" label="로그인" />
+        <q-tab name="signUp" icon="alarm" label="회원가입" />
       </q-tabs>
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="mails">
+      <q-tab-panels v-model="tab" animated class="">
+        <q-tab-panel name="login">
           <div class="q-pa-md">
-            <q-input v-model="input1" label="Dialog Input" />
-            <q-input v-model="input2" label="Dialog Input 2" />
-            <q-input v-model="input3" label="Dialog Input 3" />
-            <q-btn label="Close" color="primary" @click="dialog = false" />
-            <q-btn label="Submit" color="secondary" @click="dialog = false" />
+            <Form>
+              <q-input v-model="loginId" label="ID" />
+              <q-input v-model="loginPw" label="password"  />
+              <div class="footer">
+                <q-btn label="로그인" color="primary" @click="submitLogin" />
+                <q-btn label="닫기" color="secondary" @click="closeLoginModal" />              
+              </div>              
+            </Form>
           </div>
         </q-tab-panel>
-        <q-tab-panel name="alarms">
+        <q-tab-panel name="signUp">
           <div class="q-pa-md">
-            <q-input v-model="input4" label="Dialog Input" />
-            <q-input v-model="input5" label="Dialog Input 2" />
-            <q-input v-model="input6" label="Dialog Input 3" />
-            <q-btn label="Close" color="primary" @click="dialog = false" />
-            <q-btn label="Submit" color="secondary" @click="dialog = false" />
+            <q-input v-model="signupId" label="ID" />
+            <q-input v-model="signupPw" label="password" />
+            <q-input v-model="signupPw2" label="password 2" />
+            <q-input v-model="signupNickname" label="Nick Name" />
+            <div class="footer">
+              <q-btn label="확인" color="primary" @click="closeLoginModal" />
+              <q-btn label="닫기" color="secondary" @click="closeLoginModal" />
+            </div>
           </div>
         </q-tab-panel>
       </q-tab-panels>
+      </div>
+
     </q-dialog>
   </div>
 </template>
 
 <script setup>
     import { ref } from 'vue'
-    const dialog = ref(false)
-    const tab = ref('mails')
-    const openLoginModal = () => {
-        dialog.value = true
+    import useLoginStore from '~/stores/login'
+    import { useQuasar } from 'quasar'
+    import { Form, Field, defineRule } from 'vee-validate';
+
+    const $q = useQuasar();
+    const loginId = ref('')
+    const loginPw = ref('')
+
+    const signupId = ref('')
+    const signupPw = ref('')
+    const signupPw2 = ref('')
+    const signupNickname = ref('')
+    const tab = ref('login')
+
+    const loginStore = useLoginStore()
+
+
+    const loginValidate = () => {
+      // 로그인 유효성 검사 로직
+      if (!loginId.value || !loginPw.value) {
+        $q.notify({
+          type: 'negative',
+          message: '아이디와 비밀번호를 입력해주세요.'
+        })
+        return false
+      }
+      return true
     }
+
     const closeLoginModal = () => {
-        dialog.value = false
+      loginStore.closeLoginModal()
     }
     const submitLogin = () => {
-        // 로그인 처리 로직
+      if(loginValidate()) {
         closeLoginModal()
+      }else{
+        
+      }
     }
-    const cancelLogin = () => {
-        closeLoginModal()
-    }
-    const handleTabChange = (newTab) => {
-        tab.value = newTab
-    }
-    const handleInputChange = (value) => {
-        // 입력값 변경 처리 로직
-        console.log('Input changed:', value)
-    }
-    const handleSubmit = () => {
-        // 제출 처리 로직
-        console.log('Form submitted')
-        closeLoginModal()
-    }
-    const handleCancel = () => {
-        // 취소 처리 로직
-        console.log('Form cancelled')
-        closeLoginModal()
-    }
-    const handleDialogClose = () => {
-        // 다이얼로그 닫기 처리 로직
-        console.log('Dialog closed')
-        closeLoginModal()
-    }
-    const handleDialogOpen = () => {
-        // 다이얼로그 열기 처리 로직
-        console.log('Dialog opened')
-        openLoginModal()
-    }
+
+
+    // 유효성 검사 함ㅅ
 </script>
 
 <style lang="scss" scoped>
+
+.dialog {
+  width: 600px ;
+  max-width: 100%;
+}
+
+.footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
 </style>

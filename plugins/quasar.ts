@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from '#app';
-import { Quasar, Notify, Dialog, Loading, QBtn, QTooltip, QTab, QTabPanel, QTabs, QTabPanels, QInput, QSelect, QIcon } from 'quasar'; // ✅ QBtn 추가
+import { Quasar, Notify, Dialog, Loading, QBtn, QTooltip, QTab, QTabPanel, QTabs, QTabPanels, QInput, QSelect, QIcon, QDialog } from 'quasar'; // ✅ QBtn 추가
 
 
 import 'quasar/dist/quasar.css';
@@ -7,6 +7,7 @@ import '@quasar/extras/material-icons/material-icons.css';
 
 export default defineNuxtPlugin((nuxtApp) => {
   if (process.client) {
+    nuxtApp.vueApp.component('q-dialog', QDialog); // ✅ q-dialog 전역 등록
     nuxtApp.vueApp.component('q-icon', QIcon); // ✅ q-icon 전역 등록
     nuxtApp.vueApp.component('q-input', QInput); // ✅ q-input 전역 등록
     nuxtApp.vueApp.component('q-select', QSelect); // ✅ q-select 전역 등록
