@@ -5,6 +5,12 @@ export default defineNuxtConfig({
     kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
     public: {
       kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
+      firebaseApiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY,
+      firebaseAuthDomain: process.env.NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+      firebaseProjectId: process.env.NUXT_PUBLIC_FIREBASE_PROJECT_ID,
+      firebaseStorageBucket: process.env.NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+      firebaseMessagingSenderId: process.env.NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+      firebaseAppId: process.env.NUXT_PUBLIC_FIREBASE_APP_ID,
     }
   },
   components: true,
@@ -30,6 +36,7 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
   ],
+  plugins: ['@/plugins/firebase.client.ts'],
   vite: {
     optimizeDeps: {
       include: ['quasar', '@quasar/extras/material-icons'],

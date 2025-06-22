@@ -19,9 +19,9 @@
                 <li class="login" v-if="!isLoggedIn">
                     <button @click="openLoginModal">로그인</button>
                 </li>
-                <li  v-else>
-                <nuxt-link to="/mypage">{{ nickname }}님</nuxt-link>
-                <button class="login" @click="logout">로그아웃</button>
+                <li v-else>
+                    <nuxt-link to="/mypage">{{ name }}님</nuxt-link>
+                    <button class="login" @click="logout">로그아웃</button>
                 </li>
             </ul>
         </nav>
@@ -35,13 +35,18 @@ import { ref } from 'vue';
 
 import useLoginStore from '~/stores/login';
 const loginStore = useLoginStore();
-const isLoggedIn = ref(loginStore.isLoggedIn);
-const nickname = ref(loginStore.name);
+
+const { isLoggedIn, name } = storeToRefs(loginStore)
+
+const { $auth } = useNuxtApp()
+
+
 const openLoginModal = () => {
     loginStore.openLoginModal();
 };
 const logout = () => {
-    loginStore.logout();
+
+    loginStore.logout($auth);
 };
 
 
@@ -82,6 +87,7 @@ const logout = () => {
 .navigation a:hover {
     color: #007bff;
 }
+
 .login {
     color: black;
     border: none;
@@ -89,6 +95,7 @@ const logout = () => {
     cursor: pointer;
     padding: 0px 10px;
 }
+
 .login:hover {
     color: white;
     background-color: dodgerblue;
@@ -97,6 +104,7 @@ const logout = () => {
     transition: background-color 0.3s ease;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 .login:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
