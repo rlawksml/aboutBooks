@@ -9,6 +9,9 @@ const useLoginStore = defineStore('loginStore', {
             pw: null,
             user: null,
             isLoggedIn: false,
+            isLoginModalOpen: false,
+            isRegisterModalOpen: false,
+            isForgotPasswordModalOpen: false,
         };
     },
     actions: {

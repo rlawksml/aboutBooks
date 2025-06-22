@@ -105,6 +105,7 @@ const searchQuery = ref('')
 const selectedRegion = ref('')
 const currentPage = ref(1)
 const itemsPerPage = 9
+const tooltip = ref(false)
 
 // 지역 목록
 const regions = computed(() => {
