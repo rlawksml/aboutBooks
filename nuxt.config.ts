@@ -3,8 +3,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   runtimeConfig: {
     kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
+    kakaoMapAPI: process.env.NUXT_PUBLIC_MAP_API_KEY,
     public: {
       kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
+      kakaoMapAPI: process.env.NUXT_PUBLIC_MAP_API_KEY,
       firebaseApiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY,
       firebaseAuthDomain: process.env.NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
       firebaseProjectId: process.env.NUXT_PUBLIC_FIREBASE_PROJECT_ID,
