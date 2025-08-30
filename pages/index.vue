@@ -1,12 +1,11 @@
-
 <template>
     <div>
         <content-section>
-            <search-bar></search-bar>
+            <search-bar class="mb-5"></search-bar>
             <intro-books></intro-books>
         </content-section>
-        
-        <Library/>
+
+        <Library />
     </div>
 
 </template>
@@ -24,8 +23,4 @@ const youtubeSearch = useYoutubeSearch();
 
 </script>
 
-<style lang="scss" scoped>
-
-    
-
-</style>
+<style lang="scss" scoped></style>

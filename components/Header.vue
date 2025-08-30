@@ -1,8 +1,9 @@
 <template>
-    <div class="header">
-        <nuxt-link to="/" class="text-3xl font-bold text-lime-600">
-            <h2 class="text-lime-600 text-[60px]">About Books</h2>
+    <div class="header flex items-center">
+        <nuxt-link to="/" class="text-3xl font-bold text-lime-600 mr-auto flex items-center">
+            <h2 class="text-lime-600 text-[40px]">About Books</h2>
         </nuxt-link>
+
 
         <nav class=" navigation">
             <ul>

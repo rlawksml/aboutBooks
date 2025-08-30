@@ -1,67 +1,96 @@
-
 <template>
-    <content-section class="!flex-nowrap">
+  <content-section class="!flex-nowrap">
 
-        <div class="flex flex-col justify-center my-2 mb-5 ml-auto">
+    <div class="flex flex-col justify-center my-2 mb-5 ml-auto">
 
-            <!-- <div class="flex justify-center my-2 mb-5 ml-auto">
-                <h2 class="text-sm font-light px-4 py-2">검색 결과</h2>
-                <p class="text-gray-600 px-4 py-2">검색 건수 : {{ dataInfo.length || 0 }} 권</p>
-                <button @click="$router.push('/')" class="bg-blue-500 text-blue px-4 py-2 rounded">홈으로</button>
-            </div> -->
+
+    </div>
+
+    <div v-if="dataInfo.length" class="books-grid">
+      <div v-for="data in dataInfo" :key="data.isbn" class="book-card">
+        <img :src="data.thumbnail" alt="Book Thumbnail" class="book-thumbnail" />
+        <div class="book-info">
+
+          <!-- title -->
+          <h3 v-if="props.type === 'blog'" class="book-title" v-html="data.title"></h3>
+          <h3 v-else class="book-title">{{ data.title }}</h3>
+
+          <p class="book-contents">{{ data.contents }}</p>
+
+          <p v-if="data.authors" v-for="(author, index) in data.authors" :key="index" class="book-publisher">{{ author
+          }}</p>
+
+          <p v-if="data.blogname" class="book-publisher">{{ data.blogname }}</p>
+
+          <p v-if="data.price" class="book-price">가격: {{ data.price }}원</p>
+
+          <p class="book-datetime">{{ new Date(data.datetime).toLocaleDateString() }}</p>
+
+          <a :href="data.url" target="_blank" class="text-blue-500 hover:underline">자세히 보기</a>
+
         </div>
-
-        <div v-if="dataInfo.length" class="books-grid">
-            <div v-for="data in dataInfo" :key="data.isbn" class="book-card">
-                <img :src="data.thumbnail" alt="Book Thumbnail" class="book-thumbnail" />
-                <div class="book-info">
-                    
-                    <!-- title -->
-                    <h3 v-if="props.type === 'blog'" class="book-title" v-html="data.title"></h3>
-                    <h3 v-else class="book-title">{{ data.title }}</h3>
-
-                    <p class="book-contents">{{ data.contents }}</p>
-
-                    <p v-if="data.authors" 
-                    v-for="(author, index) in data.authors"
-                    :key="index"
-                    class="book-publisher">{{ author }}</p>
-
-                    <p v-if="data.blogname" class="book-publisher">{{ data.blogname }}</p>
-
-                    <p v-if="data.price" class="book-price">가격: {{ data.price }}원</p>
-                
-                    <p class="book-datetime">{{ new Date(data.datetime).toLocaleDateString() }}</p>
-
-                    <a href="" :href="data.url" target="_blank" class="text-blue-500 hover:underline">자세히 보기</a>
-
-                </div>
-            </div>
-        </div>
-        <div class="no-data" v-else>
-            <p>검색 결과가 없습니다.</p>
-        </div>
-    </content-section>
+      </div>
+    </div>
+    <div class="no-data" v-else>
+      <p>검색 결과가 없습니다.</p>
+    </div>
+  </content-section>
 </template>
 
 <script setup>
-const { books } = storeToRefs(useBooksStore())
+
 import { storeToRefs } from 'pinia'
 import useBooksStore from "../stores/books"
 import ContentSection from './ContentSection.vue'
+import useYoutubeSearch from '~/stores/youtubeSearch'
+import useBlogSearch from '~/stores/blogSearch'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+
+const booksStore = useBooksStore()
+const youtubeStore = useYoutubeSearch()
+const blogStore = useBlogSearch()
+const route = useRoute()
+const $q = useQuasar();
+
 
 const props = defineProps({
-    dataInfo: {
-        type: Array,
-        default: (() => [])
-    },
-    type: {
-        type: String,
-        default: 'books'
-    }
+  dataInfo: {
+    type: Array,
+    default: (() => [])
+  },
+  type: {
+    type: String,
+    default: 'books'
+  }
 })
 
+const searchHandler = async (key) => {
+  if (!key) return;
+  $q.loading.show({
+    message: '검색중입니다...',
+    spinnerColor: 'white',
+    spinnerSize: 50,
+  })
+  await Promise.all([
+    booksStore.searchBook(key),
+    youtubeStore.fetchYoutube(key),
+    blogStore.fetchBlog(key)
+  ]);
+  $q.loading.hide()
+}
+
 onMounted(() => {
+  const key = route.query.q;
+  if (key) {
+    searchHandler(key);
+  }
+})
+
+watch(() => route.query.q, (newQ) => {
+  if (newQ) {
+    searchHandler(newQ);
+  }
 })
 
 watch(() => props.dataInfo, (newData) => {
@@ -73,7 +102,8 @@ watch(() => props.dataInfo, (newData) => {
 <style scoped>
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 한 줄 3개 고정 */
+  grid-template-columns: repeat(3, 1fr);
+  /* 한 줄 3개 고정 */
   gap: 1.5rem;
   padding: 1rem;
 }
@@ -147,5 +177,4 @@ watch(() => props.dataInfo, (newData) => {
     grid-template-columns: 1fr;
   }
 }
-
 </style>

@@ -65,9 +65,11 @@ const searchClick = async () => {
         spinnerColor: 'white',
         spinnerSize: 50,
     })
-    await booksStore.searchBook(searchData.value)
-    await youtubeStore.fetchYoutube(searchData.value)
-    await blogStore.fetchBlog(searchData.value)
+    await Promise.all([
+        booksStore.searchBook(key),
+        youtubeStore.fetchYoutube(key),
+        blogStore.fetchBlog(key)
+    ]);
     $q.loading.hide()
     await moveSearchPage()
 }
