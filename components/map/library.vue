@@ -1,30 +1,34 @@
 <template>
-
-
   <div class="wrapper p-4 max-w-6xl mx-auto">
     <!-- 🔍 검색 + 지역 선택 -->
     <div class="searchBox flex flex-col sm:flex-row gap-4 mb-6">
       <KakaoMap ref="kakaoMapRef" />
 
-      <q-btn flat round color="primary" icon="help" @click="tooltip = !tooltip" class="mr-2">
-        <q-tooltip v-model="tooltip" anchor="top middle" self="top middle" :offset="[0, 30]" transition-show="jump-down"
-          transition-hide="jump-up">
-          서울시내 도서관을 검색할 수 있습니다. 지역을 선택하거나 도서관 이름으로 검색해보세요.
-        </q-tooltip>
-      </q-btn>
-      <q-select v-model="selectedRegion" :options="regions" label="지역 선택" placeholder="전체 지역"
-        class="pSelect border rounded" emit-value map-options @update:model-value="currentPage = 1" />
+      <client-only>
+        <q-btn flat round color="primary" icon="help" @click="tooltip = !tooltip" class="mr-2">
+          <q-tooltip v-model="tooltip" anchor="top middle" self="top middle" :offset="[0, 30]"
+            transition-show="jump-down" transition-hide="jump-up">
+            서울시내 도서관을 검색할 수 있습니다. 지역을 선택하거나 도서관 이름으로 검색해보세요.
+          </q-tooltip>
+        </q-btn>
 
-      <q-input v-model="searchQuery" type="search" label="도서관 검색" placeholder="도서관 이름을 검색해보세요" class="w-full sm:w-1/2"
-        icon="search" @keyup.enter="searchBtn" dnense>
-        <template v-slot:append>
-          <q-icon v-if="searchQuery !== ''" name="close" @click="resetInput" class="cursor-pointer" />
-          <q-icon name="search" @click="searchBtn" class="cursor-pointer" />
-        </template>
-      </q-input>
-      <q-btn @click="resetSearch" :icon="'refresh'"
-        :class="'bg-blue-600 px-2 py-2 rounded hover:bg-blue-700 transition'" class="last">
-      </q-btn>
+
+        <q-select v-model="selectedRegion" :options="regions" label="지역 선택" placeholder="전체 지역"
+          class="pSelect border rounded" emit-value map-options @update:model-value="currentPage = 1" />
+
+        <q-input v-model="searchQuery" type="search" label="도서관 검색" placeholder="도서관 이름을 검색해보세요" class="w-full sm:w-1/2"
+          icon="search" @keyup.enter="searchBtn" dnense>
+          <template v-slot:append>
+            <q-icon v-if="searchQuery !== ''" name="close" @click="resetInput" class="cursor-pointer" />
+            <q-icon name="search" @click="searchBtn" class="cursor-pointer" />
+          </template>
+        </q-input>
+
+
+        <q-btn @click="resetSearch" :icon="'refresh'"
+          :class="'bg-blue-600 px-2 py-2 rounded hover:bg-blue-700 transition'" class="last">
+        </q-btn>
+      </client-only>
     </div>
 
     <!-- 🧾 도서관 카드 목록 -->

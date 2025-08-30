@@ -1,25 +1,27 @@
 <template>
-    <div>
-        <search-bar :searchType="false" class="flex" />
-        
-        <q-tabs v-model="tab" class="text-primary" dense active-color="primary" indicator-color="primary">
-            <q-tab name="books" label="도서" />
-            <q-tab name="youtube" label="유튜브" />
-            <q-tab name="blog" label="블로그" />
-        </q-tabs>
+    <ClientOnly>
+        <div>
+            <search-bar :searchType="false" class="flex" />
 
-        <q-tab-panels v-model="tab" animated>
-            <q-tab-panel name="books">
-                <search-template :dataInfo="dataInfo" type="book" class="search-bar-container" />
-            </q-tab-panel>
-            <q-tab-panel name="youtube">
-                <search-template :dataInfo="dataInfo2" type="youbue" class="search-bar-container" />
-            </q-tab-panel>
-            <q-tab-panel name="blog">
-                <search-template :dataInfo="dataInfo3" type="blog" class="search-bar-container" />
-            </q-tab-panel>
-        </q-tab-panels>
-    </div>
+            <q-tabs v-model="tab" class="text-primary" dense active-color="primary" indicator-color="primary">
+                <q-tab name="books" label="도서" />
+                <q-tab name="youtube" label="유튜브" />
+                <q-tab name="blog" label="블로그" />
+            </q-tabs>
+
+            <q-tab-panels v-model="tab" animated>
+                <q-tab-panel name="books">
+                    <search-template :dataInfo="dataInfo" type="book" class="search-bar-container" />
+                </q-tab-panel>
+                <q-tab-panel name="youtube">
+                    <search-template :dataInfo="dataInfo2" type="youbue" class="search-bar-container" />
+                </q-tab-panel>
+                <q-tab-panel name="blog">
+                    <search-template :dataInfo="dataInfo3" type="blog" class="search-bar-container" />
+                </q-tab-panel>
+            </q-tab-panels>
+        </div>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -29,6 +31,7 @@ import useblogSearch from '~/stores/blogSearch';
 import lodash from 'lodash'
 import { useQuasar } from 'quasar'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { ClientOnly } from '#components';
 
 let dataInfo = ref<any[]>([])
 let dataInfo2 = ref<any[]>([])
@@ -46,7 +49,7 @@ onMounted(async () => {
         spinnerColor: 'white',
         spinnerSize: 50,
     })
-    
+
     dataInfo.value = lodash.cloneDeep(booksStore.books)
     dataInfo2.value = lodash.cloneDeep(youtubeStore.youtubes)
     dataInfo3.value = lodash.cloneDeep(blogStore.blogList)
@@ -55,22 +58,22 @@ onMounted(async () => {
 
 // store 데이터가 바뀔 때마다 dataInfo도 자동 갱신
 watch(
-  () => booksStore.books,
-  (newVal) => {
-    dataInfo.value = lodash.cloneDeep(newVal)
-  }
+    () => booksStore.books,
+    (newVal) => {
+        dataInfo.value = lodash.cloneDeep(newVal)
+    }
 )
 watch(
-  () => youtubeStore.youtubes,
-  (newVal) => {
-    dataInfo2.value = lodash.cloneDeep(newVal)
-  }
+    () => youtubeStore.youtubes,
+    (newVal) => {
+        dataInfo2.value = lodash.cloneDeep(newVal)
+    }
 )
 watch(
-  () => blogStore.blogList,
-  (newVal) => {
-    dataInfo3.value = lodash.cloneDeep(newVal)
-  }
+    () => blogStore.blogList,
+    (newVal) => {
+        dataInfo3.value = lodash.cloneDeep(newVal)
+    }
 )
 
 onUnmounted(() => {

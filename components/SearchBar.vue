@@ -1,11 +1,13 @@
 <template>
     <div class="flex items-center justify-center">
-        <q-btn v-if="searchType" flat round color="primary" icon="help" @click="tooltip = !tooltip" class="mr-2">
-            <q-tooltip v-model="tooltip" anchor="top middle" self="top middle" :offset="[0, 30]"
-                transition-show="jump-down" transition-hide="jump-up">
-                통합 검색 안내: 도서, 블로그, 유튜브를 한 번에 검색할 수 있습니다.
-            </q-tooltip>
-        </q-btn>
+        <ClientOnly>
+            <q-btn v-if="searchType" flat round color="primary" icon="help" @click="tooltip = !tooltip" class="mr-2">
+                <q-tooltip v-model="tooltip" anchor="top middle" self="top middle" :offset="[0, 30]"
+                    transition-show="jump-down" transition-hide="jump-up">
+                    통합 검색 안내: 도서, 블로그, 유튜브를 한 번에 검색할 수 있습니다.
+                </q-tooltip>
+            </q-btn>
+        </ClientOnly>
         <Form class="" v-slot="{ validate }">
             <div class="p-1 border-gray-100 rounded-lg shadow-md flex justify-center my-2 ml-auto">
                 <Field name="search" rules="required" v-model="searchData"
@@ -66,9 +68,9 @@ const searchClick = async () => {
         spinnerSize: 50,
     })
     await Promise.all([
-        booksStore.searchBook(key),
-        youtubeStore.fetchYoutube(key),
-        blogStore.fetchBlog(key)
+        booksStore.searchBook(searchData.value),
+        youtubeStore.fetchYoutube(searchData.value),
+        blogStore.fetchBlog(searchData.value)
     ]);
     $q.loading.hide()
     await moveSearchPage()

@@ -18,7 +18,7 @@
           <p class="book-contents">{{ data.contents }}</p>
 
           <p v-if="data.authors" v-for="(author, index) in data.authors" :key="index" class="book-publisher">{{ author
-          }}</p>
+            }}</p>
 
           <p v-if="data.blogname" class="book-publisher">{{ data.blogname }}</p>
 

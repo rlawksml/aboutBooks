@@ -11,14 +11,16 @@
             <p class="mb-5 desc">{{ reduceLetter(selectBook.desc) }}</p>
         </div>
 
-        <div class="flex w-[100%] my-5">
-            <q-btn class="mr-auto" label="책 보러 가기" color="primary" @click="moveExternal(selectBook.link)" />
-            <div class="flex gap-3">
-                <q-btn label="Preview" color="teal" dense flat @click="" />
-                <q-btn label="AI 추천 도서" color="orange" dense flat @click="" />
-                <q-btn label="관련 자료" color="purple" dense flat @click="moveSearchPage" />
+        <ClientOnly>
+            <div class="flex w-[100%] my-5">
+                <q-btn class="mr-auto" label="책 보러 가기" color="primary" @click="moveExternal(selectBook.link)" />
+                <div class="flex gap-3">
+                    <q-btn label="Preview" color="teal" dense flat @click="" />
+                    <q-btn label="AI 추천 도서" color="orange" dense flat @click="" />
+                    <q-btn label="관련 자료" color="purple" dense flat @click="moveSearchPage" />
+                </div>
             </div>
-        </div>
+        </ClientOnly>
     </div>
 </template>
 
@@ -69,6 +71,12 @@ const selectBook = useState('selectBook', () => {
     searchKey.value = initBookList[randomNum].title
     return initBookList[randomNum]
 })
+
+onMounted(() => {
+    selectBook.value = selectBook.value // 여기서 콜백이 실행됨
+    searchKey.value = selectBook.value.title
+})
+
 
 const moveExternal = (link: string) => {
     window.open(link)
