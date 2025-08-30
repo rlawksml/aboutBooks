@@ -13,14 +13,20 @@
 
         <ClientOnly>
             <div class="flex w-[100%] my-5">
-                <q-btn class="mr-auto" label="책 보러 가기" color="primary" @click="moveExternal(selectBook.link)" />
+                <q-btn class="mr-auto" label="책 보러 가기" color="primary" @click="moveExternal(selectBook.link)"
+                    :disable="isLoading" />
                 <div class="flex gap-3">
-                    <q-btn label="Preview" color="teal" dense flat @click="" />
-                    <q-btn label="AI 추천 도서" color="orange" dense flat @click="" />
-                    <q-btn label="관련 자료" color="purple" dense flat @click="moveSearchPage" />
+                    <q-btn label="Preview" color="teal" dense flat @click="openSharedModal('preview')"
+                        :loading="isLoading" :disable="isLoading" />
+                    <q-btn label="AI 추천 도서" color="orange" dense flat @click="openSharedModal('ai')"
+                        :loading="isLoading" :disable="isLoading" />
+                    <q-btn label="관련 자료" color="purple" dense flat @click="moveSearchPage" :disable="isLoading" />
                 </div>
             </div>
         </ClientOnly>
+
+        <GptModal v-model="modalVisible" :title="modalContent.title" :desc="modalContent.desc" :img="modalContent.img"
+            :related-href="modalContent.relatedHref" :kind="modalContent.kind" />
     </div>
 </template>
 
@@ -29,10 +35,60 @@ import bookImage1 from '~/assets/images/book1.jpg'
 import bookImage2 from '~/assets/images/book2.jpg'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
+import useGptSearch from '~/composables/useGptSearch'; // 이렇게 임포트합니다.
+import GptModal from '../GptModal.vue';
+
+const { searchResult, isLoading, error, search } = useGptSearch();
 
 const $q = useQuasar();
 const router = useRouter()
 let searchKey = ref('')
+
+const modalVisible = ref(false)
+const modalContent = ref({
+    title: '',
+    desc: '',
+    img: '',
+    relatedHref: '',
+    kind: '',
+    searchResult: {}
+})
+
+const openSharedModal = async (kind: 'preview' | 'ai') => {
+    $q.loading.show({
+        message: 'GPT가 정보를 분석 중입니다...',
+        spinnerColor: 'white'
+    });
+    try {
+        if (kind === 'preview') {
+            await search(searchKey.value, 'summary')
+            modalContent.value = {
+                title: selectBook.value.title,
+                desc: selectBook.value.desc || '',
+                img: selectBook.value.bookImg || '',
+                relatedHref: selectBook.value.link || '',
+                kind: 'preview',
+                searchResult: searchResult.value
+            }
+        } else if (kind === 'ai') {
+            await search(searchKey.value, 'recommend')
+            // 샘플: AI 내용 생성(실제 AI 호출 시 결과로 교체)
+            modalContent.value = {
+                title: `AI 추천 — ${selectBook.value.title}`,
+                desc: `<p>AI가 분석한 추천 설명(샘플). ${selectBook.value.title} 관련 도서/자료를 확인해보세요.</p>`,
+                img: selectBook.value.bookImg || '',
+                relatedHref: `https://www.google.com/search?q=${encodeURIComponent(selectBook.value.title)}`,
+                kind: 'ai',
+                searchResult: searchResult.value
+            }
+        }
+    } catch (e) {
+        console.error(e)
+    } finally {
+        $q.loading.hide();
+    }
+    modalVisible.value = true
+}
 
 function notifyUser() {
     $q.notify({
@@ -57,7 +113,6 @@ const initBookList = [
     }
 ]
 
-
 const moveSearchPage = () => {
     router.push({ path: '/search', query: { q: searchKey.value } })
 }
@@ -77,12 +132,15 @@ onMounted(() => {
     searchKey.value = selectBook.value.title
 })
 
-
 const moveExternal = (link: string) => {
     window.open(link)
 }
 
-
+watch(searchResult, (newResult) => {
+    if (newResult) {
+        modalVisible.value = true;
+    }
+});
 </script>
 
 <style scoped>
@@ -120,8 +178,6 @@ const moveExternal = (link: string) => {
     transform: scale(1.03);
     box-shadow: 0 14px 30px rgba(2, 6, 23, 0.08);
 }
-
-
 
 /* 반응형: 화면이 작아지면 패널 크기 줄이기 */
 @media (max-width: 640px) {

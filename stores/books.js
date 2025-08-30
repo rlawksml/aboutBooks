@@ -4,6 +4,19 @@ const useBooksStore = defineStore('booksStore', {
   state() {
     return {
       books: [],
+      gptBookInfo: {
+        title: '',
+        summary: '',
+        details: {
+          author: '',
+          published: '',
+          genre: ''
+        },
+        recommand: [],
+        otherBooks: [
+          { title: '', link: '', author: '' },
+        ],
+      },
     };
   },
   actions: {
