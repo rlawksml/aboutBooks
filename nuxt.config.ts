@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    baseURL: '/aboutBooks/', // Replace <repository-name> with your actual GitHub repository name
+  },
   // app: {
-  //   baseURL: '/aboutBooks/', // Replace <repository-name> with your actual GitHub repository name
+  //   baseURL: '/',
   // },
   compatibilityDate: '2024-11-01',
   runtimeConfig: {
@@ -20,9 +23,6 @@ export default defineNuxtConfig({
   },
   components: true,
   devtools: { enabled: true },
-  app: {
-    baseURL: '/',
-  },
   css: [
     '@/assets/css/reset.css',
     "@/assets/css/tailwind.css",
