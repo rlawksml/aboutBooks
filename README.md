@@ -8,9 +8,13 @@
 - **통합 서지 검색**: 책 제목, 설명 등을 통한 API 기반 도서 정보 조회
 - **외부 링크 연결**: 구매나 상세 페이지로 쉽게 이동
 - **근처 도서관 정보**: 현재 위치 기반으로 도서 소장 도서관 지도 표시
+- **회원가입 / 로그인 (Firebase Authentication)**  
+  - 이메일/비밀번호 기반 회원가입 & 로그인
+  - Firebase Auth로 안전하게 사용자 인증 처리
+  - 로그인 후 개인화 기능(검색 기록, 즐겨찾기 예정)
 
 ---
-##  기술 스택
+## ⚙️ 기술 스택
 | 영역 | 기술 |
 |------|------|
 | 프레임워크 | Nuxt 3 (Vue 3 기반) |
@@ -18,7 +22,15 @@
 | UI/스타일링 | Tailwind CSS, Quasar Components |
 | 외부 API | Daum 책 / 블로그 / 유튜브 API / kakao map 등 |  
 | 서울시 공공데이터포털 | 서울시 공공도서관 정보 json |  
+| Authentication & DB | Firebase Authentication, Firestore
+
 <!-- | 배포 | Vercel / Netlify 등 (Deploy 설명 링크) | -->
+
+## 📌 앞으로의 업데이트 내용
+- 검색 결과 페이지 UI 개선
+- MyPage UI 개선
+- 검색 기록 저장 기능 (Firestore 연동)
+- 개인화 추천 도서 제공
 
 ---
 ##  설치 & 실행 방법
