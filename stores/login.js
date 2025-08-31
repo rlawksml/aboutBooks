@@ -37,12 +37,6 @@ const useLoginStore = defineStore('loginStore', {
                     this.name = data.nickname || '사용자'
                 }
 
-                // localStorage.setItem('user', JSON.stringify({
-                //     id: this.id,
-                //     name: this.name,
-                //     email: this.email,
-                //     uid: this.uuid
-                // }))
                 this.isLoggedIn = true;
                 return true
             } catch (error) {
@@ -50,6 +44,7 @@ const useLoginStore = defineStore('loginStore', {
                 throw new Error('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.')
             }
         },
+
         async logout(auth) {
             try {
                 await signOut(auth);
@@ -59,6 +54,7 @@ const useLoginStore = defineStore('loginStore', {
                 throw new Error('로그아웃에 실패했습니다.')
             }
         },
+
         async signup({ auth, db, paramsId, paramsPw, paramsName }) {
 
             try {
