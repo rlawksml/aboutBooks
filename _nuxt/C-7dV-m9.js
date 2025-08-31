@@ -1,1 +1,0 @@
-import{_ as t}from"./B_CZ38bi.js";import{ak as o,al as s,aE as c}from"./DDJyDB4R.js";const n={},r={class:"flex flex-col items-center h-[90vh] max-h-[100vh] px-10"};function a(e,l){return s(),o("div",r,[c(e.$slots,"default")])}const i=t(n,[["render",a]]);export{i as C};

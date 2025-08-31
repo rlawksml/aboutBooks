@@ -1,1 +1,0 @@
-import{C as o}from"./C-7dV-m9.js";import{_ as n}from"./B_CZ38bi.js";import{ak as a,al as r,A as c,am as s,ax as _}from"./DDJyDB4R.js";const l={};function m(f,t){const e=o;return r(),a("div",null,[c(e,null,{default:s(()=>[...t[0]||(t[0]=[_(" 이곳은 소개페이지 입니다. ",-1)])]),_:1})])}const u=n(l,[["render",m]]);export{u as default};
