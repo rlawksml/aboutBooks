@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  app: {
-    baseURL: 'https://github.com/rlawksml/aboutBooks.git', // Replace <repository-name> with your actual GitHub repository name
-  },
+  // app: {
+  //   baseURL: '/aboutBooks/', // Replace <repository-name> with your actual GitHub repository name
+  // },
   compatibilityDate: '2024-11-01',
   runtimeConfig: {
     kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
@@ -20,18 +20,15 @@ export default defineNuxtConfig({
   },
   components: true,
   devtools: { enabled: true },
-  // app: {
-  //   baseURL: '/',
-  // },
+  app: {
+    baseURL: '/',
+  },
   css: [
     '@/assets/css/reset.css',
     "@/assets/css/tailwind.css",
     'quasar/dist/quasar.css',
     '@quasar/extras/material-icons/material-icons.css',
   ],
-  build: {
-    transpile: [],
-  },
   postcss: {
     plugins: {
       tailwindcss: {},  // Tailwind CSS 활성화
@@ -46,6 +43,17 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['quasar', '@quasar/extras/material-icons'],
     },
+    build: {
+      target: 'esnext'
+    }
+  },
+  // 💡 서버 측 빌드(Nitro)도 esnext를 사용하도록 설정
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext'
+      }
+    }
   },
 
 })

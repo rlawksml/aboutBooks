@@ -338,7 +338,7 @@ const imgToShow = computed(() => {
 }
 
 /* Dialog overlay: soft dim + blur */
-::v-deep .q-dialog__inner {
+:deep(.q-dialog__inner) {
     background: rgba(10, 12, 20, 0.36);
     backdrop-filter: blur(6px);
 }
