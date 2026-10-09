@@ -7,6 +7,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     const loginStore = useLoginStore()
     // Import Auth type from firebase/auth and cast $auth
 
+    if (!$auth) {
+        loginStore.resetUserInfo()
+        return
+    }
 
     onAuthStateChanged($auth as Auth, (user) => {
         if (user) {

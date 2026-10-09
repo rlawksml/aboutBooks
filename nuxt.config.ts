@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   // },
   compatibilityDate: '2024-11-01',
   runtimeConfig: {
+    openaiApiKey: process.env.OPENAI_API_KEY,
     kakaoAPI: process.env.NUXT_PUBLIC_API_KEY,
     kakaoMapAPI: process.env.NUXT_PUBLIC_MAP_API_KEY,
     public: {
