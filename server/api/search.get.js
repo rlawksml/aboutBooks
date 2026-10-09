@@ -2,14 +2,9 @@
 import { OpenAI } from 'openai';
 import { defineEventHandler, getQuery } from 'h3';
 
-const config = useRuntimeConfig();
-
-// 환경 변수에서 API 키를 가져옵니다.
-const openai = new OpenAI({
-    apiKey: config.public.OPENAI_API_KEY,
-});
-
 export default defineEventHandler(async (event) => {
+    const config = useRuntimeConfig(event);
+
     // 쿼리 파라미터(q)를 안전하게 가져옵니다.
     const query = getQuery(event);
     const userQuery = query.q;
@@ -20,7 +15,18 @@ export default defineEventHandler(async (event) => {
         };
     }
 
+    // 추천 기능의 키가 없어도 지도와 나머지 페이지는 정상적으로 실행합니다.
+    if (!config.openaiApiKey) {
+        return {
+            error: '도서 추천 API 키가 설정되지 않았습니다.',
+        };
+    }
+
     try {
+        const openai = new OpenAI({
+            apiKey: config.openaiApiKey,
+        });
+
         const chatCompletion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             // response_format을 json_object로 설정하여 JSON 응답을 강제합니다.
